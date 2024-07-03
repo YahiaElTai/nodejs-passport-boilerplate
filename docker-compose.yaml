@@ -1,0 +1,17 @@
+services:
+  postgres_db:
+    image: postgres:16-alpine3.20
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/pgdata
+      # this initdb sciprt allows creating 2 databases. one for the app and one for testing
+      - ./initdb:/docker-entrypoint-initdb.d 
+volumes:
+  postgres_data:
